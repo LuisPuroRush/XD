@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Animación para TikTok Live</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #000; /* Fondo negro para TikTok */
+            overflow: hidden;
+        }
+
+        .container {
+            display: flex;
+            align-items: center;
+            opacity: 0;
+            position: absolute; /* Todos en el mismo lugar */
+            transition: opacity 0.5s ease-in-out;
+        }
+
+        .container.active {
+            opacity: 1;
+        }
+
+        .logo {
+            width: 50px;
+            height: 50px;
+            margin-right: 10px;
+            animation: glowZoom 1.5s ease-in-out infinite; /* Zoom y brillo */
+        }
+
+        .text {
+            color: #fff;
+            font-family: "Comic Sans MS", "Comic Sans", cursive; /* Fuente Comic Sans */
+            font-size: 18px;
+            font-weight: bold;
+            text-shadow: 0 0 5px rgba(255, 255, 255, 0.5); /* Iluminación leve */
+        }
+
+        @keyframes glowZoom {
+            0% {
+                transform: scale(1);
+                filter: brightness(100%);
+            }
+            50% {
+                transform: scale(1.1); /* Zoom leve */
+                filter: brightness(130%); /* Brillo sutil */
+            }
+            100% {
+                transform: scale(1);
+                filter: brightness(100%);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container" id="kick">
+        <img src="https://kick.com/favicon.ico" class="logo" alt="Kick Logo">
+        <span class="text">LuisPuroRush</span>
+    </div>
+    <div class="container" id="minecraft">
+        <img src="https://static.wikia.nocookie.net/minecraft_gamepedia/images/9/93/Grass_Block_JE7_BE6.png" class="logo" alt="Minecraft Logo">
+        <span class="text">IP: PanquesitoLovers.aternos.me</span>
+    </div>
+    <div class="container" id="instagram">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/Instagram_icon.png/1200px-Instagram_icon.png" class="logo" alt="Instagram Logo">
+        <span class="text">IG: @LuisPuroRush</span>
+    </div>
+
+    <script>
+        const kick = document.getElementById('kick');
+        const minecraft = document.getElementById('minecraft');
+        const instagram = document.getElementById('instagram');
+
+        function showElement(element, duration, nextCallback) {
+            element.classList.add('active');
+            setTimeout(() => {
+                element.classList.remove('active');
+                if (nextCallback) nextCallback();
+            }, duration);
+        }
+
+        function startAnimation() {
+            showElement(kick, 3000, () => {
+                showElement(minecraft, 3000, () => {
+                    showElement(instagram, 3000, startAnimation); // Loop infinito
+                });
+            });
+        }
+
+        // Iniciar la animación
+        startAnimation();
+    </script>
+</body>
+</html>
